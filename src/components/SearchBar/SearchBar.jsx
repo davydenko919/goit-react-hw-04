@@ -5,15 +5,6 @@ import { Field, Form, Formik } from "formik";
 export default function SearchBar(onSearch) {
   return (
     <header>
-      {/* <form>
-        <input
-          type="text"
-          autocomplete="off"
-          autofocus
-          placeholder="Search images and photos"
-        />
-        <button type="submit">Search</button>
-      </form> */}
 
       <Formik
       initialValues={{ query: "" }}
@@ -23,7 +14,13 @@ export default function SearchBar(onSearch) {
       }}
     >
       <Form className={css.form}>
-        <Field className={css.input} type="text" name="query" />
+        <Field 
+        className={css.input} 
+        type="text" 
+        name="query"
+        placeholder="Search images and photos"
+        autofocus
+        autocomplete="off" />
         <button type="submit">Search</button>
       </Form>
     </Formik>

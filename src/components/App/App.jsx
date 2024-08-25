@@ -27,10 +27,16 @@ export default function App() {
     getPhotos();
   }, []);
 
+
+  const heandleSearch = (newQuerry) => {
+    console.log(newQuerry);
+    
+  }
+
   return (
     <>
     {error && <p>There was an error, please realod page</p>}
-      <SearchBar />
+      <SearchBar onSearch={heandleSearch}/>
       {/* <ImageGallery /> */}
       {isloading && <Loader />}
       {/* <ErrorMessage /> */}
