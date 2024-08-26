@@ -5,7 +5,7 @@ import axios from "axios";
 export const fetchPhotos = async (searchQuery, currentPage=1) => {
     const params = {
       client_id: "gd4G_sgygMUkO02KFlkJH-wK01AAv8zBPJEiuMZ0zQU",
-      query: "car",
+      query: searchQuery,
       page: currentPage,
       orientation: "landscape",
       per_page: 10,
@@ -15,6 +15,7 @@ export const fetchPhotos = async (searchQuery, currentPage=1) => {
     };
 
     const { data } = await axios.get( "https://api.unsplash.com/search/photos?", {params} );
-    return data;
+    return data.results
+    ;
 }
 
