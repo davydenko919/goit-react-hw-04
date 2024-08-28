@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import React,{ useState, useEffect } from "react";
 import css from "./App.module.css";
 import { fetchPhotos } from "../../photo-api.js";
 import SearchBar from "../SearchBar/SearchBar.jsx";
 import ImageGallery from "../ImageGallery/ImageGallery.jsx";
+import ImageModal from "../ImageModal/ImageModal.jsx";
 import { RotatingLines } from 'react-loader-spinner'
 
 
@@ -13,6 +14,8 @@ export default function App() {
 
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
+
+  const [modalOpen, setModaOpen] = useState(false);
 
   const handleSearch = (newQuery) => {
     setQuery(newQuery);
@@ -66,6 +69,8 @@ export default function App() {
           />}
 
       {photos.length > 0 && <button onClick={handleLoadMore}>Load more articles</button>}
+
+      <ImageModal />
     </>
   );
 }
