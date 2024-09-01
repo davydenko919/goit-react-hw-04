@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import css from "./App.module.css";
 import { fetchPhotos } from "../../photo-api.js";
 import SearchBar from "../SearchBar/SearchBar.jsx";
@@ -15,7 +15,10 @@ export default function App() {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
 
-  const [modalOpen, setModaOpen] = useState(false);
+  const [modalIsOpen, setModaIsOpen] = useState(false);
+  const [modalURl, setModalURl] = useState('');
+  const [modalAlt, setModalAlt] = useState('');
+  
 
   const handleSearch = (newQuery) => {
     setQuery(newQuery);
@@ -50,12 +53,23 @@ export default function App() {
       getPhotos();
   }, [page, query]);
 
+  const openModal = (url,alt) => {
+    setModaIsOpen(true);
+    setModalURl(url);
+    setModalAlt(alt);
+  }
+
+  const closeModal = () => {
+    setModaIsOpen(false);
+    setModalURl('');
+    setModalAlt('');
+  }
+
   return (
     <>
-      {/* <ErrorMessage /> */}
       {error && <p>There was an error, please realod page</p>}
       <SearchBar onSearch={handleSearch} query={query} />
-      {photos.length > 0 && <ImageGallery items={photos} />}
+      {photos.length > 0 && <ImageGallery items={photos} openModal={openModal}/>}
       {isloading && <RotatingLines
           visible={true}
           height="96"
@@ -70,7 +84,7 @@ export default function App() {
 
       {photos.length > 0 && <button onClick={handleLoadMore}>Load more articles</button>}
 
-      <ImageModal />
+      <ImageModal modalIsOpen={modalIsOpen} closeModal={closeModal} src={modalURl} alt={modalAlt} />
     </>
   );
 }
