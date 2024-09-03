@@ -1,12 +1,12 @@
 import css from "./SearchBar.module.css";
-import toast, { Toaster } from "react-hot-toast";
+// import toast, { Toaster } from "react-hot-toast";
 import { Field, Form, Formik } from "formik";
 
 export default function SearchBar({onSearch, query}) {
 
-  const notify = () => toast.error('Enter text for search!', {
-    icon: '🥸',
-  });
+  // const notify = () => toast.error('Enter text for search!', {
+  //   icon: '🥸',
+  // });
 
   return (
     <header>
@@ -15,7 +15,7 @@ export default function SearchBar({onSearch, query}) {
         onSubmit={(values, actions) => {
           onSearch(values.query);
           actions.resetForm();
-          query === "" && notify();
+          // query === "" && notify();
 
         }}
       >
@@ -31,7 +31,7 @@ export default function SearchBar({onSearch, query}) {
           <button type="submit">Search</button>
         </Form>
       </Formik>
-      <Toaster />
+      {/* <Toaster /> */}
     </header>
   );
 }

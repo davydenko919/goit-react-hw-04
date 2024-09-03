@@ -4,7 +4,10 @@ import { fetchPhotos } from "../../photo-api.js";
 import SearchBar from "../SearchBar/SearchBar.jsx";
 import ImageGallery from "../ImageGallery/ImageGallery.jsx";
 import ImageModal from "../ImageModal/ImageModal.jsx";
+import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn.jsx";
+import ErrorMessage from "../ErrorMessage/ErrorMessage.jsx";
 import { RotatingLines } from 'react-loader-spinner'
+import toast, { Toaster } from "react-hot-toast";
 
 
 export default function App() {
@@ -15,15 +18,27 @@ export default function App() {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
 
-  const [modalIsOpen, setModaIsOpen] = useState(false);
-  const [modalURl, setModalURl] = useState('');
-  const [modalAlt, setModalAlt] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalURL, setModalURL] = useState('');
+  const [modalALT, setModalALT] = useState('');
+  
   
 
+
   const handleSearch = (newQuery) => {
+
+    const notify = () => toast.error('Enter text for search!', {
+      icon: '🥸',
+    });
+
+    if(newQuery === ""){
+      notify();
+    }
+    else{
     setQuery(newQuery);
     setPage(1);
     setPhotos([]);
+  }
   };
 
   const handleLoadMore = () => {
@@ -54,21 +69,22 @@ export default function App() {
   }, [page, query]);
 
   const openModal = (url,alt) => {
-    setModaIsOpen(true);
-    setModalURl(url);
-    setModalAlt(alt);
+    setIsModalOpen(true);
+    setModalURL(url);
+    setModalALT(alt);
   }
 
   const closeModal = () => {
-    setModaIsOpen(false);
-    setModalURl('');
-    setModalAlt('');
+    setIsModalOpen(false);
+    setModalURL('');
+    setModalALT('');
   }
 
   return (
     <>
-      {error && <p>There was an error, please realod page</p>}
+      {error && <ErrorMessage />}
       <SearchBar onSearch={handleSearch} query={query} />
+      <Toaster />
       {photos.length > 0 && <ImageGallery items={photos} openModal={openModal}/>}
       {isloading && <RotatingLines
           visible={true}
@@ -82,9 +98,9 @@ export default function App() {
           wrapperClass=""
           />}
 
-      {photos.length > 0 && <button onClick={handleLoadMore}>Load more articles</button>}
+      {photos.length > 0 && <LoadMoreBtn handleLoadMore={handleLoadMore}/>}
 
-      <ImageModal modalIsOpen={modalIsOpen} closeModal={closeModal} src={modalURl} alt={modalAlt} />
+      <ImageModal isModalOpen={isModalOpen} closeModal={closeModal} src={modalURL} alt={modalALT} />
     </>
   );
 }

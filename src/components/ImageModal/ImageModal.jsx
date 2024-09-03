@@ -14,18 +14,19 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
-export default function ImageModal({modalIsOpen, closeModal, src, alt}) {
+export default function ImageModal({isModalOpen, closeModal, src, alt}) {
 
 
 
     return (
       <Modal
-        isOpen={modalIsOpen}
+        isOpen={isModalOpen}
         onRequestClose={closeModal}
         style={customStyles}
         contentLabel="Example Modal"
       >
         <img src={src} alt={alt} className={css.img} />
+        <p>{alt}</p>
       </Modal>
       
     );
